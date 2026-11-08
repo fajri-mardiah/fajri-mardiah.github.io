@@ -1,0 +1,274 @@
+/* ==========================================================================
+   Undangan Pernikahan - Fajri & Mardiah
+   Custom Stylesheet (assets/css/style.css)
+   ========================================================================== */
+
+/* 1. Base & Reset */
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    background-color: #fcf8f7;
+    background-image: radial-gradient(rgba(95, 111, 82, 0.05) 1px, transparent 0),
+                      radial-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 0);
+    background-size: 24px 24px;
+    background-position: 0 0, 12px 12px;
+    color: #2b3325;
+    overflow-x: hidden;
+    width: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent auto-zoom on mobile inputs in iOS */
+input[type="text"],
+select,
+textarea {
+    font-size: 16px !important;
+}
+
+@media (min-width: 768px) {
+    input[type="text"],
+    select,
+    textarea {
+        font-size: 0.875rem !important; /* 14px */
+    }
+}
+
+/* 2. Glassmorphism Cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 10px 30px -5px rgba(95, 111, 82, 0.1),
+                0 4px 10px -2px rgba(0, 0, 0, 0.03);
+}
+
+.glass-card-dark {
+    background: rgba(43, 51, 37, 0.78);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* 3. Hero Section Enhancements */
+.hero-wrapper {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(
+        to bottom,
+        rgba(252, 248, 247, 0.84),
+        rgba(252, 248, 247, 0.65) 35%,
+        rgba(252, 248, 247, 0.90) 85%,
+        #fcf8f7 100%
+    ), url('../images/background_hero.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+@media (min-width: 768px) {
+    .hero-wrapper {
+        background-attachment: fixed;
+    }
+}
+
+/* 3.1 Cover Screen (Buka Undangan & Guest Personalization) */
+#cover-modal {
+    background-image: linear-gradient(
+        to bottom,
+        rgba(30, 38, 25, 0.75),
+        rgba(30, 38, 25, 0.58) 40%,
+        rgba(30, 38, 25, 0.88) 100%
+    ), url('../images/background_hero.jpg');
+    background-size: cover;
+    background-position: center center;
+    transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1),
+                opacity 0.85s ease;
+    will-change: transform, opacity;
+}
+
+#cover-modal.cover-hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Body lock when cover is open */
+body.cover-active {
+    overflow: hidden !important;
+    height: 100vh;
+}
+
+/* Music disc spin animation */
+@keyframes spinSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.spin-music {
+    animation: spinSlow 4s linear infinite;
+}
+
+/* 4. Mempelai Profile Avatars (Cropped Assets: m.jpg & f.jpg) */
+.avatar-profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    transition: transform 0.4s ease;
+}
+
+.avatar-profile:hover {
+    transform: scale(1.08);
+}
+
+/* 5. Scroll Animations (Intersection Observer) */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-100 { transition-delay: 80ms; }
+.delay-200 { transition-delay: 160ms; }
+.delay-300 { transition-delay: 240ms; }
+.delay-400 { transition-delay: 320ms; }
+
+/* 6. Decorative Elements & Blobs */
+.blob {
+    position: absolute;
+    filter: blur(70px);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+/* 7. Custom Scrollbar for Wishes Container */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #eef0eb;
+    border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #a3b293;
+    border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #6f815e;
+}
+
+/* 8. Toast Notification */
+#toast {
+    visibility: hidden;
+    min-width: 240px;
+    max-width: calc(100vw - 32px);
+    background-color: #5F6F52;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 9999px;
+    padding: 12px 20px;
+    position: fixed;
+    z-index: 9999;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%) translateY(20px);
+    opacity: 0;
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-family: 'Lora', serif;
+    font-size: 0.875rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    pointer-events: none;
+}
+
+#toast.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* 9. Floating Buttons */
+.floating-actions {
+    position: fixed;
+    bottom: max(16px, env(safe-area-inset-bottom, 16px));
+    right: max(16px, env(safe-area-inset-right, 16px));
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-float {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #5F6F52;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(95, 111, 82, 0.35);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    font-size: 0.95rem;
+}
+
+@media (min-width: 640px) {
+    .btn-float {
+        width: 48px;
+        height: 48px;
+        font-size: 1.1rem;
+    }
+}
+
+.btn-float:hover {
+    background: #404c37;
+    transform: scale(1.08);
+}
+
+/* 10. Pulse Animation for Rings & Badges */
+@keyframes softPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.85; }
+}
+
+.pulse-soft {
+    animation: softPulse 3s infinite ease-in-out;
+}
+
+/* 11. Custom Select arrow styling */
+select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236f815e' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.25em 1.25em;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 2.25rem;
+}
