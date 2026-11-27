@@ -101,12 +101,21 @@ function showToast(message, icon = 'fa-check-circle') {
         document.body.appendChild(toast);
     }
 
-    toast.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
+    const safeIcon = String(icon || 'fa-check-circle').replace(/[^a-z0-9-\s]/gi, '');
+    toast.replaceChildren();
+
+    const iconEl = document.createElement("i");
+    iconEl.className = `fas ${safeIcon}`;
+
+    const textEl = document.createElement("span");
+    textEl.textContent = String(message ?? '');
+
+    toast.append(iconEl, document.createTextNode(' '), textEl);
     toast.className = "show";
 
     clearTimeout(toastTimeout);
     toastTimeout = setTimeout(() => {
-        toast.className = toast.className.replace("show", "");
+        toast.className = toast.className.replace("show", "").trim();
     }, 3200);
 }
 
